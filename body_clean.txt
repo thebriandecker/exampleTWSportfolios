@@ -1,0 +1,1026 @@
+<body>
+
+<div class="header">
+  <div class="logo-block">
+    <div>
+      <div class="logo-text">The Wealth Society</div>
+      <div class="logo-sub" style="color:#f0ece4;">Portfolio Research &mdash; AI Supercycle Portfolio Framework Examples <span style="font-size:9px;opacity:0.6;">(Education Purpose Only)</span></div>
+    </div>
+  </div>
+  <div class="header-right">
+    <div class="header-tag">$300,000 per portfolio &middot; April 2026</div>
+    <div class="header-badge">12&ndash;18 Month Thesis</div>
+  </div>
+</div>
+
+<div class="tab-bar">
+  <button class="tab-btn active" onclick="showPort(0)" id="tb0">Defensive Growth <span class="tab-risk">Conservative</span></button>
+  <button class="tab-btn" onclick="showPort(1)" id="tb1">Aggressive Growth <span class="tab-risk">Moderate</span></button>
+  <button class="tab-btn" onclick="showPort(2)" id="tb2">High Conviction <span class="tab-risk">Aggressive</span></button>
+  <button class="tab-btn" onclick="showPort(3)" id="tb3">Thematic ETFs <span class="tab-risk">Holdings</span></button>
+  <button class="tab-btn" onclick="showPort(4)" id="tb4">Portfolio Matrix</button>
+</div>
+<style>
+.how-to-wrap { border-bottom: 1px solid rgba(240,180,41,0.15); }
+.how-to-toggle {
+  display: flex; align-items: center; gap: 12px;
+  padding: 11px 32px; cursor: pointer;
+  background: rgba(240,180,41,0.06);
+  transition: background 0.2s;
+  user-select: none;
+}
+.how-to-toggle:hover { background: rgba(240,180,41,0.10); }
+.how-to-label {
+  display: flex; align-items: center; gap: 10px; flex: 1;
+}
+.how-to-pip {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: #f0b429; flex-shrink: 0;
+}
+.how-to-title {
+  font-size: 12px; font-weight: 600; color: #f0b429;
+  letter-spacing: 0.04em;
+}
+.how-to-subtitle {
+  font-size: 10px; color: rgba(240,236,228,0.4);
+  letter-spacing: 0.02em; margin-left: 4px;
+}
+.how-to-chevron {
+  width: 18px; height: 18px; flex-shrink: 0;
+  color: rgba(240,180,41,0.5);
+  transition: transform 0.3s ease;
+}
+.how-to-chevron.open { transform: rotate(180deg); }
+.how-to-body {
+  overflow: hidden;
+  max-height: 0;
+  transition: max-height 0.35s ease, padding 0.25s ease;
+}
+.how-to-body.open {
+  max-height: 320px;
+}
+.how-to-inner {
+  padding: 14px 32px 2px 32px;
+  background: rgba(10,24,41,0.4);
+  border-top: 1px solid rgba(240,180,41,0.08);
+}
+.how-to-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 12px 20px;
+  margin-bottom: 2px;
+}
+.how-to-block { font-size: 11px; color: rgba(240,236,228,0.75); line-height: 1.6; font-family: "DM Sans", sans-serif; }
+.how-to-block strong { color: #f0ece4; }
+.how-to-block .label {
+  font-size: 10px; font-weight: 600; letter-spacing: 0.06em;
+  text-transform: uppercase; color: #8af8fa; margin-bottom: 4px; font-family: "DM Sans", sans-serif;
+}
+.how-to-profiles { display: flex; gap: 6px; flex-wrap: nowrap; margin-top: 6px; }
+.profile-chip {
+  display: inline-flex; align-items: center; gap: 5px;
+  padding: 3px 9px; border-radius: 20px;
+  font-size: 9px; font-weight: 600; letter-spacing: 0.02em;
+  border: 1px solid;
+  white-space: nowrap;
+}
+.chip-teal  { color: #8af8fa; border-color: rgba(0,212,200,0.3); background: rgba(0,212,200,0.07); }
+.chip-gold  { color: #f0b429; border-color: rgba(240,180,41,0.3); background: rgba(240,180,41,0.07); }
+.chip-cream { color: #f0ece4; border-color: rgba(240,236,228,0.2); background: rgba(240,236,228,0.05); }
+.chip-dot { width: 5px; height: 5px; border-radius: 50%; background: currentColor; }
+.how-to-footer {
+  font-size: 10px; color: rgba(240,236,228,0.38);
+  border-top: 1px solid rgba(255,255,255,0.06);
+  padding-top: 10px; line-height: 1.6;
+}
+</style>
+
+<div class="how-to-wrap">
+  <div class="how-to-toggle" onclick="toggleHowTo()" id="howToToggle">
+    <div class="how-to-label">
+      <div class="how-to-pip"></div>
+      <span class="how-to-title">Start Here — 3 Steps</span>
+      <span class="how-to-subtitle">How to use this tool in under a minute — click to expand</span>
+    </div>
+    <svg class="how-to-chevron" id="howToChevron" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M5 7.5L10 12.5L15 7.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </div>
+
+  <div class="how-to-body" id="howToBody">
+    <div class="how-to-inner">
+      <div style="font-size:12px;color:rgba(240,236,228,0.75);line-height:1.6;margin-bottom:2px;font-family:DM Sans,sans-serif;">Inside TWS we teach a <strong style="color:#f0ece4;">4 Layer AI Supercycle Portfolio Framework</strong> for a simplified way to build your long term portfolio. A video explaining how to use this effectively is available inside Skool.</div>
+      <div class="how-to-grid">
+
+        <div class="how-to-block">
+          <div class="label">① Pick Your Profile</div>
+          Choose the portfolio that matches your <strong>Wealth Risk Profile:</strong> Defensive Growth, Aggressive Growth, or High Conviction. Use the tabs above to switch between them.
+        </div>
+
+        <div class="how-to-block">
+          <div class="label">② Study the Layers</div>
+          Every portfolio uses the same <strong>4-Layer Framework:</strong> Core ETFs &rarr; Thematic ETFs &rarr; Core Stocks &rarr; Asymmetric Bets. The allocation percentages shift based on your profile, but the structure stays the same.
+        </div>
+
+        <div class="how-to-block">
+          <div class="label">③ Swap in Your Picks</div>
+          The tickers shown are <strong>examples, not orders.</strong> Swap any name for one you have conviction in. The full TWS Stock &amp; ETF universe lives in the Notion Stock Playbook.<br><br>
+          <a href="https://www.notion.so/TWS-Stock-Playbook-Q2-2026-1619f8809f5b8343b8c2019d5777e74f" target="_blank" style="display:inline-block;padding:8px 18px;background:#8af8fa;color:#0d0f10;font-weight:700;font-size:12px;border-radius:5px;text-decoration:none;font-family:DM Mono,monospace;letter-spacing:.04em;margin-top:4px;">&rarr; Open the Stock Playbook</a>
+        </div>
+
+      </div>
+      <div style="margin-top:2px;padding-top:6px;border-top:1px solid rgba(240,180,41,0.08);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;">
+        <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
+          <span style="font-size:10px;font-weight:600;color:#8af8fa;letter-spacing:.06em;text-transform:uppercase;white-space:nowrap;font-family:DM Sans,sans-serif;">Which Profile?</span>
+          <div class="how-to-profiles" style="margin-top:0;">
+            <span class="profile-chip chip-teal"><span class="chip-dot"></span>Defensive Growth &mdash; Starter &amp; Strategist</span>
+            <span class="profile-chip chip-gold"><span class="chip-dot"></span>Aggressive Growth &mdash; Explorer &amp; Comeback</span>
+            <span class="profile-chip chip-cream"><span class="chip-dot"></span>High Conviction &mdash; Futurist &amp; Maverick</span>
+          </div>
+        </div>
+        <div style="font-size:10px;color:rgba(240,236,228,0.75);line-height:1.6;text-align:right;font-family:DM Sans,sans-serif;">
+          <strong style="color:rgba(240,180,41,0.6);">Educational purposes only &mdash; not financial advice.</strong>
+          These are examples, not trading portfolios. Full TWS universe in the
+          <strong style="color:rgba(0,212,200,0.7);">Notion Stock Playbook</strong>.
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+function toggleHowTo() {
+  var body = document.getElementById('howToBody');
+  var chevron = document.getElementById('howToChevron');
+  var sub = document.querySelector('.how-to-subtitle');
+  var isOpen = body.classList.toggle('open');
+  chevron.classList.toggle('open', isOpen);
+  sub.textContent = isOpen ? '— click to collapse' : '— click to expand';
+}
+</script>
+
+<!-- ═══════════════════════════════════════════════════
+     PORTFOLIO 0 — DEFENSIVE GROWTH
+═══════════════════════════════════════════════════ -->
+<div id="port0" class="main">
+<div class="left-panel">
+  <div class="port-header">
+    <div class="port-title">Defensive Growth Portfolio</div>
+    <div style="font-size:11px;color:#8af8fa;font-weight:500;letter-spacing:.03em;margin-bottom:4px;">Best Aligned Framework: <strong>Starter &amp; Strategist</strong></div>
+    
+  </div>
+  <div class="metrics">
+  </div>
+
+  <div class="bucket-section">
+    <div class="bucket-head bkt-core-etf"><span class="bh-name">Core ETFs</span><span class="bh-meta">41% &middot; $123K &middot; (5-6 positions)</span></div>
+  </div>
+
+  <div class="bucket-section">
+    <div class="bucket-head bkt-thematic-etf"><span class="bh-name">Thematic ETFs</span><span class="bh-meta">24% &middot; $72K &middot; (5-7 positions)</span></div>
+  </div>
+
+  <div class="bucket-section">
+    <div class="bucket-head bkt-core-stock"><span class="bh-name">Core Stocks</span><span class="bh-meta">25% &middot; $75K &middot; 8 positions</span></div>
+  </div>
+
+  <div class="bucket-section">
+    <div class="bucket-head bkt-future-shot"><span class="bh-name">Asymmetric Bets</span><span class="bh-meta">10% &middot; $30K &middot; 4 positions</span></div>
+  </div>
+</div>
+<div class="right-panel" id="rp0">
+  <div style="background:#141618;border:1px solid #242628;border-radius:8px;padding:14px 16px;margin-top:16px;">
+  <div style="display:flex;align-items:baseline;justify-content:space-between;margin-bottom:10px;">
+    <span style="font-size:10px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:#8af8fa;font-family:DM Sans,sans-serif;">Live Performance</span>
+    <span id="def_ts" style="font-size:8px;color:rgba(240,236,228,0.25);">loading…</span>
+  </div>
+  <table style="width:100%;border-collapse:collapse;">
+    <thead>
+      <tr style="border-bottom:1px solid rgba(26,53,80,0.9);">
+        <th style="text-align:left;padding:4px 6px 6px 0;font-size:8px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:rgba(240,236,228,0.4);font-family:DM Sans,sans-serif;">Layer</th>
+        <th style="text-align:right;padding:4px 6px 6px;font-size:8px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:rgba(240,236,228,0.4);font-family:DM Sans,sans-serif;">Alloc</th>
+        <th style="text-align:right;padding:4px 6px 6px;font-size:8px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:rgba(240,236,228,0.4);font-family:DM Sans,sans-serif;">30D</th>
+        <th style="text-align:right;padding:4px 0 6px 6px;font-size:8px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:rgba(240,236,228,0.4);font-family:DM Sans,sans-serif;">YTD</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr style="border-bottom:0.5px solid rgba(26,53,80,0.6);">
+          <td style="padding:8px 6px 8px 0;">
+            <div style="display:flex;align-items:center;gap:6px;">
+              <div style="width:6px;height:6px;border-radius:2px;background:#8af8fa;flex-shrink:0;"></div>
+              <span style="font-size:10px;font-weight:600;color:#f0ece4;font-family:DM Sans,sans-serif;">Core ETFs</span>
+            </div>
+          </td>
+          <td style="text-align:right;padding:8px 6px;font-size:10px;color:rgba(240,236,228,0.5);font-family:DM Sans,sans-serif;">41%</td>
+          <td id="def_30d_core_etfs" style="text-align:right;padding:8px 6px;font-size:10px;font-weight:600;font-family:DM Mono,monospace;color:rgba(240,236,228,0.3);">—</td>
+          <td id="def_ytd_core_etfs" style="text-align:right;padding:8px 0 8px 6px;font-size:10px;font-weight:600;font-family:DM Mono,monospace;color:rgba(240,236,228,0.3);">—</td>
+        </tr><tr style="border-bottom:0.5px solid rgba(26,53,80,0.6);">
+          <td style="padding:8px 6px 8px 0;">
+            <div style="display:flex;align-items:center;gap:6px;">
+              <div style="width:6px;height:6px;border-radius:2px;background:#8af8fa;flex-shrink:0;"></div>
+              <span style="font-size:10px;font-weight:600;color:#f0ece4;font-family:DM Sans,sans-serif;">Thematic ETFs</span>
+            </div>
+          </td>
+          <td style="text-align:right;padding:8px 6px;font-size:10px;color:rgba(240,236,228,0.5);font-family:DM Sans,sans-serif;">24%</td>
+          <td id="def_30d_thematic_etfs" style="text-align:right;padding:8px 6px;font-size:10px;font-weight:600;font-family:DM Mono,monospace;color:rgba(240,236,228,0.3);">—</td>
+          <td id="def_ytd_thematic_etfs" style="text-align:right;padding:8px 0 8px 6px;font-size:10px;font-weight:600;font-family:DM Mono,monospace;color:rgba(240,236,228,0.3);">—</td>
+        </tr><tr style="border-bottom:0.5px solid rgba(26,53,80,0.6);">
+          <td style="padding:8px 6px 8px 0;">
+            <div style="display:flex;align-items:center;gap:6px;">
+              <div style="width:6px;height:6px;border-radius:2px;background:#8af8fa;flex-shrink:0;"></div>
+              <span style="font-size:10px;font-weight:600;color:#f0ece4;font-family:DM Sans,sans-serif;">Core Stocks</span>
+            </div>
+          </td>
+          <td style="text-align:right;padding:8px 6px;font-size:10px;color:rgba(240,236,228,0.5);font-family:DM Sans,sans-serif;">25%</td>
+          <td id="def_30d_core_stocks" style="text-align:right;padding:8px 6px;font-size:10px;font-weight:600;font-family:DM Mono,monospace;color:rgba(240,236,228,0.3);">—</td>
+          <td id="def_ytd_core_stocks" style="text-align:right;padding:8px 0 8px 6px;font-size:10px;font-weight:600;font-family:DM Mono,monospace;color:rgba(240,236,228,0.3);">—</td>
+        </tr><tr style="border-bottom:0.5px solid rgba(26,53,80,0.6);">
+          <td style="padding:8px 6px 8px 0;">
+            <div style="display:flex;align-items:center;gap:6px;">
+              <div style="width:6px;height:6px;border-radius:2px;background:#8af8fa;flex-shrink:0;"></div>
+              <span style="font-size:10px;font-weight:600;color:#f0ece4;font-family:DM Sans,sans-serif;">Asymmetric Bets</span>
+            </div>
+          </td>
+          <td style="text-align:right;padding:8px 6px;font-size:10px;color:rgba(240,236,228,0.5);font-family:DM Sans,sans-serif;">10%</td>
+          <td id="def_30d_asymmetric_bets" style="text-align:right;padding:8px 6px;font-size:10px;font-weight:600;font-family:DM Mono,monospace;color:rgba(240,236,228,0.3);">—</td>
+          <td id="def_ytd_asymmetric_bets" style="text-align:right;padding:8px 0 8px 6px;font-size:10px;font-weight:600;font-family:DM Mono,monospace;color:rgba(240,236,228,0.3);">—</td>
+        </tr>
+      <tr style="border-top:1px solid #1a3550;">
+        <td colspan="2" style="padding:9px 6px 9px 0;font-size:10px;font-weight:600;letter-spacing:.03em;text-transform:uppercase;color:#f0ece4;font-family:DM Sans,sans-serif;">Total Portfolio</td>
+        <td id="def_30d_total" style="text-align:right;padding:9px 6px;font-size:12px;font-weight:700;font-family:DM Mono,monospace;color:rgba(240,236,228,0.3);">—</td>
+        <td id="def_ytd_total" style="text-align:right;padding:9px 0 9px 6px;font-size:12px;font-weight:700;font-family:DM Mono,monospace;color:rgba(240,236,228,0.3);">—</td>
+      </tr>
+      <tr style="border-top:0.5px solid rgba(26,53,80,0.5);">
+        <td colspan="2" style="padding:6px 6px 3px 0;font-size:9px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:rgba(240,236,228,0.3);font-family:DM Mono,monospace;">Benchmarks</td>
+        <td></td><td></td>
+      </tr>
+      <tr style="border-bottom:0.5px solid rgba(26,53,80,0.4);">
+        <td colspan="2" style="padding:5px 6px 5px 0;">
+          <div style="display:flex;align-items:center;gap:6px;">
+            <div style="width:6px;height:6px;border-radius:50%;background:#e5e7eb;flex-shrink:0;"></div>
+            <span style="font-size:10px;font-weight:600;color:rgba(240,236,228,0.6);font-family:DM Sans,sans-serif;">S&amp;P 500 <span style="font-size:8px;color:rgba(240,236,228,0.3);">SPY</span></span>
+          </div>
+        </td>
+        <td id="def_30d_spy" style="text-align:right;padding:5px 6px;font-size:10px;font-weight:600;font-family:DM Mono,monospace;color:rgba(240,236,228,0.3);">—</td>
+        <td id="def_ytd_spy" style="text-align:right;padding:5px 0 5px 6px;font-size:10px;font-weight:600;font-family:DM Mono,monospace;color:rgba(240,236,228,0.3);">—</td>
+      </tr>
+      <tr>
+        <td colspan="2" style="padding:5px 6px 5px 0;">
+          <div style="display:flex;align-items:center;gap:6px;">
+            <div style="width:6px;height:6px;border-radius:50%;background:#f0ece4;flex-shrink:0;"></div>
+            <span style="font-size:10px;font-weight:600;color:rgba(240,236,228,0.6);font-family:DM Sans,sans-serif;">NASDAQ <span style="font-size:8px;color:rgba(240,236,228,0.3);">QQQ</span></span>
+          </div>
+        </td>
+        <td id="def_30d_qqq" style="text-align:right;padding:5px 6px;font-size:10px;font-weight:600;font-family:DM Mono,monospace;color:rgba(240,236,228,0.3);">—</td>
+        <td id="def_ytd_qqq" style="text-align:right;padding:5px 0 5px 6px;font-size:10px;font-weight:600;font-family:DM Mono,monospace;color:rgba(240,236,228,0.3);">—</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+  <div class="split-card"><div class="card-title">Sector Exposure &mdash; ETF Pass-Through Included</div><div class="chart-wrap"><canvas id="donut0"></canvas></div><div class="sec-legend" id="legend0"></div></div>
+</div>
+  
+</div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════
+     PORTFOLIO 1 — AGGRESSIVE GROWTH
+═══════════════════════════════════════════════════ -->
+<div id="port1" class="main" style="display:none">
+<div class="left-panel">
+  <div class="port-header">
+    <div class="port-title">Aggressive Growth Portfolio</div>
+    <div style="font-size:11px;color:#8af8fa;font-weight:500;letter-spacing:.03em;margin-bottom:4px;">Best Aligned Framework: <strong>Comeback &amp; Explorer</strong></div>
+    
+  </div>
+  <div class="metrics">
+  </div>
+
+  <div class="bucket-section">
+    <div class="bucket-head bkt-core-etf"><span class="bh-name">Core ETFs</span><span class="bh-meta">36% &middot; $108K &middot; (5-7 positions)</span></div>
+  </div>
+
+  <div class="bucket-section">
+    <div class="bucket-head bkt-thematic-etf"><span class="bh-name">Thematic ETFs</span><span class="bh-meta">23% &middot; $69K &middot; (5-7 positions)</span></div>
+  </div>
+
+  <div class="bucket-section">
+    <div class="bucket-head bkt-core-stock"><span class="bh-name">Core Stocks</span><span class="bh-meta">30% &middot; $90K &middot; 8 positions</span></div>
+  </div>
+
+  <div class="bucket-section">
+    <div class="bucket-head bkt-future-shot"><span class="bh-name">Asymmetric Bets</span><span class="bh-meta">11% &middot; $33K &middot; 5 positions</span></div>
+  </div>
+</div>
+<div class="right-panel" id="rp1" style="display:none;">
+  <div style="background:#141618;border:1px solid #242628;border-radius:8px;padding:14px 16px;margin-top:16px;">
+  <div style="display:flex;align-items:baseline;justify-content:space-between;margin-bottom:10px;">
+    <span style="font-size:10px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:#8af8fa;font-family:DM Sans,sans-serif;">Live Performance</span>
+    <span id="agg_ts" style="font-size:8px;color:rgba(240,236,228,0.25);">loading…</span>
+  </div>
+  <table style="width:100%;border-collapse:collapse;">
+    <thead>
+      <tr style="border-bottom:1px solid rgba(26,53,80,0.9);">
+        <th style="text-align:left;padding:4px 6px 6px 0;font-size:8px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:rgba(240,236,228,0.4);font-family:DM Sans,sans-serif;">Layer</th>
+        <th style="text-align:right;padding:4px 6px 6px;font-size:8px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:rgba(240,236,228,0.4);font-family:DM Sans,sans-serif;">Alloc</th>
+        <th style="text-align:right;padding:4px 6px 6px;font-size:8px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:rgba(240,236,228,0.4);font-family:DM Sans,sans-serif;">30D</th>
+        <th style="text-align:right;padding:4px 0 6px 6px;font-size:8px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:rgba(240,236,228,0.4);font-family:DM Sans,sans-serif;">YTD</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr style="border-bottom:0.5px solid rgba(26,53,80,0.6);">
+          <td style="padding:8px 6px 8px 0;">
+            <div style="display:flex;align-items:center;gap:6px;">
+              <div style="width:6px;height:6px;border-radius:2px;background:#8af8fa;flex-shrink:0;"></div>
+              <span style="font-size:10px;font-weight:600;color:#f0ece4;font-family:DM Sans,sans-serif;">Core ETFs</span>
+            </div>
+          </td>
+          <td style="text-align:right;padding:8px 6px;font-size:10px;color:rgba(240,236,228,0.5);font-family:DM Sans,sans-serif;">36%</td>
+          <td id="agg_30d_core_etfs" style="text-align:right;padding:8px 6px;font-size:10px;font-weight:600;font-family:DM Mono,monospace;color:rgba(240,236,228,0.3);">—</td>
+          <td id="agg_ytd_core_etfs" style="text-align:right;padding:8px 0 8px 6px;font-size:10px;font-weight:600;font-family:DM Mono,monospace;color:rgba(240,236,228,0.3);">—</td>
+        </tr><tr style="border-bottom:0.5px solid rgba(26,53,80,0.6);">
+          <td style="padding:8px 6px 8px 0;">
+            <div style="display:flex;align-items:center;gap:6px;">
+              <div style="width:6px;height:6px;border-radius:2px;background:#8af8fa;flex-shrink:0;"></div>
+              <span style="font-size:10px;font-weight:600;color:#f0ece4;font-family:DM Sans,sans-serif;">Thematic ETFs</span>
+            </div>
+          </td>
+          <td style="text-align:right;padding:8px 6px;font-size:10px;color:rgba(240,236,228,0.5);font-family:DM Sans,sans-serif;">23%</td>
+          <td id="agg_30d_thematic_etfs" style="text-align:right;padding:8px 6px;font-size:10px;font-weight:600;font-family:DM Mono,monospace;color:rgba(240,236,228,0.3);">—</td>
+          <td id="agg_ytd_thematic_etfs" style="text-align:right;padding:8px 0 8px 6px;font-size:10px;font-weight:600;font-family:DM Mono,monospace;color:rgba(240,236,228,0.3);">—</td>
+        </tr><tr style="border-bottom:0.5px solid rgba(26,53,80,0.6);">
+          <td style="padding:8px 6px 8px 0;">
+            <div style="display:flex;align-items:center;gap:6px;">
+              <div style="width:6px;height:6px;border-radius:2px;background:#8af8fa;flex-shrink:0;"></div>
+              <span style="font-size:10px;font-weight:600;color:#f0ece4;font-family:DM Sans,sans-serif;">Core Stocks</span>
+            </div>
+          </td>
+          <td style="text-align:right;padding:8px 6px;font-size:10px;color:rgba(240,236,228,0.5);font-family:DM Sans,sans-serif;">30%</td>
+          <td id="agg_30d_core_stocks" style="text-align:right;padding:8px 6px;font-size:10px;font-weight:600;font-family:DM Mono,monospace;color:rgba(240,236,228,0.3);">—</td>
+          <td id="agg_ytd_core_stocks" style="text-align:right;padding:8px 0 8px 6px;font-size:10px;font-weight:600;font-family:DM Mono,monospace;color:rgba(240,236,228,0.3);">—</td>
+        </tr><tr style="border-bottom:0.5px solid rgba(26,53,80,0.6);">
+          <td style="padding:8px 6px 8px 0;">
+            <div style="display:flex;align-items:center;gap:6px;">
+              <div style="width:6px;height:6px;border-radius:2px;background:#8af8fa;flex-shrink:0;"></div>
+              <span style="font-size:10px;font-weight:600;color:#f0ece4;font-family:DM Sans,sans-serif;">Asymmetric Bets</span>
+            </div>
+          </td>
+          <td style="text-align:right;padding:8px 6px;font-size:10px;color:rgba(240,236,228,0.5);font-family:DM Sans,sans-serif;">11%</td>
+          <td id="agg_30d_asymmetric_bets" style="text-align:right;padding:8px 6px;font-size:10px;font-weight:600;font-family:DM Mono,monospace;color:rgba(240,236,228,0.3);">—</td>
+          <td id="agg_ytd_asymmetric_bets" style="text-align:right;padding:8px 0 8px 6px;font-size:10px;font-weight:600;font-family:DM Mono,monospace;color:rgba(240,236,228,0.3);">—</td>
+        </tr>
+      <tr style="border-top:1px solid #1a3550;">
+        <td colspan="2" style="padding:9px 6px 9px 0;font-size:10px;font-weight:600;letter-spacing:.03em;text-transform:uppercase;color:#f0ece4;font-family:DM Sans,sans-serif;">Total Portfolio</td>
+        <td id="agg_30d_total" style="text-align:right;padding:9px 6px;font-size:12px;font-weight:700;font-family:DM Mono,monospace;color:rgba(240,236,228,0.3);">—</td>
+        <td id="agg_ytd_total" style="text-align:right;padding:9px 0 9px 6px;font-size:12px;font-weight:700;font-family:DM Mono,monospace;color:rgba(240,236,228,0.3);">—</td>
+      </tr>
+      <tr style="border-top:0.5px solid rgba(26,53,80,0.5);">
+        <td colspan="2" style="padding:6px 6px 3px 0;font-size:9px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:rgba(240,236,228,0.3);font-family:DM Mono,monospace;">Benchmarks</td>
+        <td></td><td></td>
+      </tr>
+      <tr style="border-bottom:0.5px solid rgba(26,53,80,0.4);">
+        <td colspan="2" style="padding:5px 6px 5px 0;">
+          <div style="display:flex;align-items:center;gap:6px;">
+            <div style="width:6px;height:6px;border-radius:50%;background:#e5e7eb;flex-shrink:0;"></div>
+            <span style="font-size:10px;font-weight:600;color:rgba(240,236,228,0.6);font-family:DM Sans,sans-serif;">S&amp;P 500 <span style="font-size:8px;color:rgba(240,236,228,0.3);">SPY</span></span>
+          </div>
+        </td>
+        <td id="agg_30d_spy" style="text-align:right;padding:5px 6px;font-size:10px;font-weight:600;font-family:DM Mono,monospace;color:rgba(240,236,228,0.3);">—</td>
+        <td id="agg_ytd_spy" style="text-align:right;padding:5px 0 5px 6px;font-size:10px;font-weight:600;font-family:DM Mono,monospace;color:rgba(240,236,228,0.3);">—</td>
+      </tr>
+      <tr>
+        <td colspan="2" style="padding:5px 6px 5px 0;">
+          <div style="display:flex;align-items:center;gap:6px;">
+            <div style="width:6px;height:6px;border-radius:50%;background:#f0ece4;flex-shrink:0;"></div>
+            <span style="font-size:10px;font-weight:600;color:rgba(240,236,228,0.6);font-family:DM Sans,sans-serif;">NASDAQ <span style="font-size:8px;color:rgba(240,236,228,0.3);">QQQ</span></span>
+          </div>
+        </td>
+        <td id="agg_30d_qqq" style="text-align:right;padding:5px 6px;font-size:10px;font-weight:600;font-family:DM Mono,monospace;color:rgba(240,236,228,0.3);">—</td>
+        <td id="agg_ytd_qqq" style="text-align:right;padding:5px 0 5px 6px;font-size:10px;font-weight:600;font-family:DM Mono,monospace;color:rgba(240,236,228,0.3);">—</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+  <div class="split-card"><div class="card-title">Sector Exposure &mdash; ETF Pass-Through Included</div><div class="chart-wrap"><canvas id="donut1"></canvas></div><div class="sec-legend" id="legend1"></div></div>
+</div>
+  
+</div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════
+     PORTFOLIO 2 — HIGH CONVICTION
+═══════════════════════════════════════════════════ -->
+<div id="port2" class="main" style="display:none">
+<div class="left-panel">
+  <div class="port-header">
+    <div class="port-title">High Conviction Portfolio</div>
+    <div style="font-size:11px;color:#8af8fa;font-weight:500;letter-spacing:.03em;margin-bottom:4px;">Best Aligned Framework: <strong>Futurist &amp; Maverick</strong></div>
+    
+  </div>
+  <div class="metrics">
+  </div>
+
+  <div class="bucket-section">
+    <div class="bucket-head bkt-core-etf"><span class="bh-name">Core ETFs</span><span class="bh-meta">28% &middot; $84K &middot; 5 positions</span></div>
+  </div>
+
+  <div class="bucket-section">
+    <div class="bucket-head bkt-thematic-etf"><span class="bh-name">Thematic ETFs</span><span class="bh-meta">20% &middot; $60K &middot; 6 positions</span></div>
+  </div>
+
+  <div class="bucket-section">
+    <div class="bucket-head bkt-core-stock"><span class="bh-name">Core Stocks</span><span class="bh-meta">38% &middot; $114K &middot; 11 positions</span></div>
+  </div>
+
+  <div class="bucket-section">
+    <div class="bucket-head bkt-future-shot"><span class="bh-name">Asymmetric Bets</span><span class="bh-meta">14% &middot; $42K &middot; 6 positions</span></div>
+  </div>
+</div>
+<div class="right-panel" id="rp2" style="display:none;">
+  <div style="background:#141618;border:1px solid #242628;border-radius:8px;padding:14px 16px;margin-top:16px;">
+  <div style="display:flex;align-items:baseline;justify-content:space-between;margin-bottom:10px;">
+    <span style="font-size:10px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:#8af8fa;font-family:DM Sans,sans-serif;">Live Performance</span>
+    <span id="hc_ts" style="font-size:8px;color:rgba(240,236,228,0.25);">loading…</span>
+  </div>
+  <table style="width:100%;border-collapse:collapse;">
+    <thead>
+      <tr style="border-bottom:1px solid rgba(26,53,80,0.9);">
+        <th style="text-align:left;padding:4px 6px 6px 0;font-size:8px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:rgba(240,236,228,0.4);font-family:DM Sans,sans-serif;">Layer</th>
+        <th style="text-align:right;padding:4px 6px 6px;font-size:8px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:rgba(240,236,228,0.4);font-family:DM Sans,sans-serif;">Alloc</th>
+        <th style="text-align:right;padding:4px 6px 6px;font-size:8px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:rgba(240,236,228,0.4);font-family:DM Sans,sans-serif;">30D</th>
+        <th style="text-align:right;padding:4px 0 6px 6px;font-size:8px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:rgba(240,236,228,0.4);font-family:DM Sans,sans-serif;">YTD</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr style="border-bottom:0.5px solid rgba(26,53,80,0.6);">
+          <td style="padding:8px 6px 8px 0;">
+            <div style="display:flex;align-items:center;gap:6px;">
+              <div style="width:6px;height:6px;border-radius:2px;background:#8af8fa;flex-shrink:0;"></div>
+              <span style="font-size:10px;font-weight:600;color:#f0ece4;font-family:DM Sans,sans-serif;">Core ETFs</span>
+            </div>
+          </td>
+          <td style="text-align:right;padding:8px 6px;font-size:10px;color:rgba(240,236,228,0.5);font-family:DM Sans,sans-serif;">28%</td>
+          <td id="hc_30d_core_etfs" style="text-align:right;padding:8px 6px;font-size:10px;font-weight:600;font-family:DM Mono,monospace;color:rgba(240,236,228,0.3);">—</td>
+          <td id="hc_ytd_core_etfs" style="text-align:right;padding:8px 0 8px 6px;font-size:10px;font-weight:600;font-family:DM Mono,monospace;color:rgba(240,236,228,0.3);">—</td>
+        </tr><tr style="border-bottom:0.5px solid rgba(26,53,80,0.6);">
+          <td style="padding:8px 6px 8px 0;">
+            <div style="display:flex;align-items:center;gap:6px;">
+              <div style="width:6px;height:6px;border-radius:2px;background:#8af8fa;flex-shrink:0;"></div>
+              <span style="font-size:10px;font-weight:600;color:#f0ece4;font-family:DM Sans,sans-serif;">Thematic ETFs</span>
+            </div>
+          </td>
+          <td style="text-align:right;padding:8px 6px;font-size:10px;color:rgba(240,236,228,0.5);font-family:DM Sans,sans-serif;">20%</td>
+          <td id="hc_30d_thematic_etfs" style="text-align:right;padding:8px 6px;font-size:10px;font-weight:600;font-family:DM Mono,monospace;color:rgba(240,236,228,0.3);">—</td>
+          <td id="hc_ytd_thematic_etfs" style="text-align:right;padding:8px 0 8px 6px;font-size:10px;font-weight:600;font-family:DM Mono,monospace;color:rgba(240,236,228,0.3);">—</td>
+        </tr><tr style="border-bottom:0.5px solid rgba(26,53,80,0.6);">
+          <td style="padding:8px 6px 8px 0;">
+            <div style="display:flex;align-items:center;gap:6px;">
+              <div style="width:6px;height:6px;border-radius:2px;background:#8af8fa;flex-shrink:0;"></div>
+              <span style="font-size:10px;font-weight:600;color:#f0ece4;font-family:DM Sans,sans-serif;">Core Stocks</span>
+            </div>
+          </td>
+          <td style="text-align:right;padding:8px 6px;font-size:10px;color:rgba(240,236,228,0.5);font-family:DM Sans,sans-serif;">38%</td>
+          <td id="hc_30d_core_stocks" style="text-align:right;padding:8px 6px;font-size:10px;font-weight:600;font-family:DM Mono,monospace;color:rgba(240,236,228,0.3);">—</td>
+          <td id="hc_ytd_core_stocks" style="text-align:right;padding:8px 0 8px 6px;font-size:10px;font-weight:600;font-family:DM Mono,monospace;color:rgba(240,236,228,0.3);">—</td>
+        </tr><tr style="border-bottom:0.5px solid rgba(26,53,80,0.6);">
+          <td style="padding:8px 6px 8px 0;">
+            <div style="display:flex;align-items:center;gap:6px;">
+              <div style="width:6px;height:6px;border-radius:2px;background:#8af8fa;flex-shrink:0;"></div>
+              <span style="font-size:10px;font-weight:600;color:#f0ece4;font-family:DM Sans,sans-serif;">Asymmetric Bets</span>
+            </div>
+          </td>
+          <td style="text-align:right;padding:8px 6px;font-size:10px;color:rgba(240,236,228,0.5);font-family:DM Sans,sans-serif;">14%</td>
+          <td id="hc_30d_asymmetric_bets" style="text-align:right;padding:8px 6px;font-size:10px;font-weight:600;font-family:DM Mono,monospace;color:rgba(240,236,228,0.3);">—</td>
+          <td id="hc_ytd_asymmetric_bets" style="text-align:right;padding:8px 0 8px 6px;font-size:10px;font-weight:600;font-family:DM Mono,monospace;color:rgba(240,236,228,0.3);">—</td>
+        </tr>
+      <tr style="border-top:1px solid #1a3550;">
+        <td colspan="2" style="padding:9px 6px 9px 0;font-size:10px;font-weight:600;letter-spacing:.03em;text-transform:uppercase;color:#f0ece4;font-family:DM Sans,sans-serif;">Total Portfolio</td>
+        <td id="hc_30d_total" style="text-align:right;padding:9px 6px;font-size:12px;font-weight:700;font-family:DM Mono,monospace;color:rgba(240,236,228,0.3);">—</td>
+        <td id="hc_ytd_total" style="text-align:right;padding:9px 0 9px 6px;font-size:12px;font-weight:700;font-family:DM Mono,monospace;color:rgba(240,236,228,0.3);">—</td>
+      </tr>
+      <tr style="border-top:0.5px solid rgba(26,53,80,0.5);">
+        <td colspan="2" style="padding:6px 6px 3px 0;font-size:9px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:rgba(240,236,228,0.3);font-family:DM Mono,monospace;">Benchmarks</td>
+        <td></td><td></td>
+      </tr>
+      <tr style="border-bottom:0.5px solid rgba(26,53,80,0.4);">
+        <td colspan="2" style="padding:5px 6px 5px 0;">
+          <div style="display:flex;align-items:center;gap:6px;">
+            <div style="width:6px;height:6px;border-radius:50%;background:#e5e7eb;flex-shrink:0;"></div>
+            <span style="font-size:10px;font-weight:600;color:rgba(240,236,228,0.6);font-family:DM Sans,sans-serif;">S&amp;P 500 <span style="font-size:8px;color:rgba(240,236,228,0.3);">SPY</span></span>
+          </div>
+        </td>
+        <td id="hc_30d_spy" style="text-align:right;padding:5px 6px;font-size:10px;font-weight:600;font-family:DM Mono,monospace;color:rgba(240,236,228,0.3);">—</td>
+        <td id="hc_ytd_spy" style="text-align:right;padding:5px 0 5px 6px;font-size:10px;font-weight:600;font-family:DM Mono,monospace;color:rgba(240,236,228,0.3);">—</td>
+      </tr>
+      <tr>
+        <td colspan="2" style="padding:5px 6px 5px 0;">
+          <div style="display:flex;align-items:center;gap:6px;">
+            <div style="width:6px;height:6px;border-radius:50%;background:#f0ece4;flex-shrink:0;"></div>
+            <span style="font-size:10px;font-weight:600;color:rgba(240,236,228,0.6);font-family:DM Sans,sans-serif;">NASDAQ <span style="font-size:8px;color:rgba(240,236,228,0.3);">QQQ</span></span>
+          </div>
+        </td>
+        <td id="hc_30d_qqq" style="text-align:right;padding:5px 6px;font-size:10px;font-weight:600;font-family:DM Mono,monospace;color:rgba(240,236,228,0.3);">—</td>
+        <td id="hc_ytd_qqq" style="text-align:right;padding:5px 0 5px 6px;font-size:10px;font-weight:600;font-family:DM Mono,monospace;color:rgba(240,236,228,0.3);">—</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+  <div class="split-card"><div class="card-title">Sector Exposure &mdash; ETF Pass-Through Included</div><div class="chart-wrap"><canvas id="donut2"></canvas></div><div class="sec-legend" id="legend2"></div></div>
+</div>
+  
+</div>
+</div>
+
+<div class="footer" id="main-footer">
+  <span id="footer-text" style="font-family:'DM Sans',sans-serif;font-size:14px;font-weight:500;color:#f0ece4;letter-spacing:0;">Additional Metrics</span>
+</div>
+
+<script>
+const secData = [
+  {labels:["Broad-Based","Energy/Minerals","AI DC Hardware","AI Infra","Aero/Defense","Gold","Bitcoin","Passive Income","Disruptive Tech","Robotics","Cyber"],data:[26,17,16,10,9,6,5,5,4,1,1],colors:["#8af8fa","#78909c","#0088a0","#00bcd4","#48a8e8","#d4a030","#ff8c00","#f0ece4","#28c868","#70f0a0","#1860c0"]},
+  {labels:["AI DC Hardware","Broad-Based","Energy/Minerals","AI Infra","Aero/Defense","Bitcoin","Passive Income","Disruptive Tech","Gold","Robotics","Cyber"],data:[19,19,15,12,7,7,6,5,4,4,2],colors:["#0088a0","#8af8fa","#78909c","#00bcd4","#48a8e8","#ff8c00","#f0ece4","#28c868","#d4a030","#70f0a0","#1860c0"]},
+  {labels:["AI DC Hardware","Energy/Minerals","Broad-Based","AI Infra","Bitcoin","Aero/Defense","Robotics","Gold","Disruptive Tech"],data:[29,17,15,12,9,6,4,4,4],colors:["#0088a0","#78909c","#8af8fa","#8af8fa","#ff8c00","#48a8e8","#70f0a0","#d4a030","#28c868"]}
+];
+function buildChart(id,legId,idx){
+  const d=secData[idx];
+  const leg=document.getElementById(legId);
+  const mx=Math.max(...d.data);
+  d.labels.forEach((l,i)=>{
+    if(!d.data[i])return;
+    const r=document.createElement("div");r.className="sec-row";
+    r.innerHTML=`<div class="sec-row-dot" style="background:${d.colors[i]}"></div><div class="sec-row-name">${l}</div><div class="sec-row-bar-wrap"><div class="sec-row-bar" style="background:${d.colors[i]};width:${Math.round(d.data[i]/mx*100)}%"></div></div><div class="sec-row-pct">${d.data[i]}%</div>`;
+    leg.appendChild(r);
+  });
+}
+buildChart("donut0","legend0",0);
+buildChart("donut1","legend1",1);
+buildChart("donut2","legend2",2);
+function updateFooter(n){
+  var t=document.getElementById('footer-text');
+  if(!t) return;
+  t.textContent = n===3 ? 'Thematic ETF Top Holdings Breakdown' : n===4 ? 'Portfolio Matrix' : 'Additional Metrics';
+}
+function showPort(n){
+  [0,1,2,3,4].forEach(function(i){
+    var p=document.getElementById("port"+i);
+    if(p) p.style.display=i===n?(i===3?"block":"flex"):"none";
+    var rp=document.getElementById("rp"+i);
+    if(rp) rp.style.display=(i===n&&i<3)?"flex":"none";
+    var cls=document.getElementById("cls"+i);
+    if(cls) cls.style.display=(i===n&&i<3)?"block":"none";
+    var btn=document.getElementById("tb"+i);
+    if(btn) btn.classList.toggle("active",i===n);
+  });
+
+  updateFooter(n);
+}
+document.addEventListener("DOMContentLoaded",function(){ showPort(0); });
+</script>
+<div id="port3" style="display:none"><div style="padding:24px 32px 40px;"><div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+
+<div style="grid-column:1/-1;margin-bottom:4px;margin-top:8px;"><span style="font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:#f0ece4;font-weight:600;">&#9632; Mixed AI DC Hardware &amp; AI Infrastructure ETFs</span></div>
+<div style="background:#141618;border:1px solid #242628;border-radius:8px;overflow:hidden;margin-bottom:16px;break-inside:avoid;">
+<div style="background:#0088a020;border-bottom:1px solid #0088a040;padding:12px 14px;">
+  <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:8px;flex-wrap:wrap;margin-bottom:6px;">
+    <div><span style="font-family:DM Mono,monospace;font-size:17px;font-weight:700;color:#f0ece4;">AIQ</span><span style="font-size:11px;color:#f0ece4;margin-left:9px;opacity:0.9;">Global X Artificial Intelligence &amp; Technology ETF</span></div>
+  </div>
+  <div style="font-size:11px;color:#f0ece4;opacity:0.7;line-height:1.5;">Broad AI exposure across 90 global holdings. Tracks the Indxx Artificial Intelligence &amp; Big Data Index. Top 10 = 35.8% of assets. Heavy international mix — Samsung and SK Hynix are top weights. 88 total holdings as of March 2026.</div>
+</div>
+<div style="padding:10px 14px;">
+  <div style="margin-top:8px;font-size:9px;"><span style="color:#f0b429;">&#x25cf;</span> <span style="color:rgba(240,236,228,0.4);letter-spacing:.03em;">Top holdings confirmed — lower weights approximate. Source: stockanalysis.com, March 2026.</span></div>
+</div>
+<div style="background:#141618;border:1px solid #242628;border-radius:8px;overflow:hidden;margin-bottom:16px;break-inside:avoid;">
+<div style="background:#0088a020;border-bottom:1px solid #0088a040;padding:12px 14px;">
+  <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:8px;flex-wrap:wrap;margin-bottom:6px;">
+    <div><span style="font-family:DM Mono,monospace;font-size:17px;font-weight:700;color:#f0ece4;">IVES</span><span style="font-size:11px;color:#f0ece4;margin-left:9px;opacity:0.9;">Dan IVES Wedbush AI Revolution ETF</span></div>
+  </div>
+  <div style="font-size:11px;color:#f0ece4;opacity:0.7;line-height:1.5;">Concentrated AI pure-play — 31 holdings from Dan Ives' AI 30 Research Report. Top 10 = 47.2% of assets. Heavily weighted to Mag-7 + TSM. Includes GEV (power/AI infra), NBIS, CRWV. Rebalances quarterly. ~$920M AUM.</div>
+</div>
+<div style="padding:10px 14px;">
+  <div style="margin-top:8px;font-size:9px;"><span style="color:#f0b429;">&#x25cf;</span> <span style="color:rgba(240,236,228,0.4);letter-spacing:.03em;">Top holdings confirmed. Source: stockanalysis.com, March 2026.</span></div>
+</div>
+<div style="grid-column:1/-1;margin-bottom:4px;margin-top:8px;"><span style="font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:#0088a0;font-weight:600;">&#9632; AI Datacenter Hardware ETF</span></div>
+<div style="background:#141618;border:1px solid #242628;border-radius:8px;overflow:hidden;margin-bottom:16px;break-inside:avoid;">
+<div style="background:#0088a020;border-bottom:1px solid #0088a040;padding:12px 14px;">
+  <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:8px;flex-wrap:wrap;margin-bottom:6px;">
+    <div><span style="font-family:DM Mono,monospace;font-size:17px;font-weight:700;color:#f0ece4;">AIPO</span><span style="font-size:11px;color:#f0ece4;margin-left:9px;opacity:0.9;">Defiance AI & Power Infrastructure ETF</span></div>
+  </div>
+  <div style="font-size:11px;color:#f0ece4;opacity:0.7;line-height:1.5;">AI infrastructure + power generation blend. ETN (8.2%) and VRT (7.7%) inside are why both are excluded as individual positions. Avoids duplication across all three portfolios.</div>
+</div>
+<div style="padding:10px 14px;">
+  <div style="margin-top:8px;font-size:9px;"><span style="color:#70f0a0;">&#x25cf;</span> <span style="color:rgba(240,236,228,0.4);letter-spacing:.03em;">Holdings confirmed from TWS research data</span></div>
+
+</div>
+<div style="background:#141618;border:1px solid #242628;border-radius:8px;overflow:hidden;margin-bottom:16px;break-inside:avoid;">
+<div style="background:#0088a020;border-bottom:1px solid #0088a040;padding:12px 14px;">
+  <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:8px;flex-wrap:wrap;margin-bottom:6px;">
+    <div><span style="font-family:DM Mono,monospace;font-size:17px;font-weight:700;color:#f0ece4;">TCAI</span><span style="font-size:11px;color:#f0ece4;margin-left:9px;opacity:0.9;">Tortoise AI Infrastructure ETF</span></div>
+  </div>
+  <div style="font-size:11px;color:#f0ece4;opacity:0.7;line-height:1.5;">Actively managed AI infrastructure fund. VRT (4.9%) and MU (4.3%) inside provide supplemental exposure without duplication. DELL and CIEN offer unique angles not elsewhere in portfolios.</div>
+</div>
+<div style="padding:10px 14px;">
+  <div style="margin-top:8px;font-size:9px;"><span style="color:#70f0a0;">&#x25cf;</span> <span style="color:rgba(240,236,228,0.4);letter-spacing:.03em;">Holdings confirmed from TWS research data</span></div>
+
+</div>
+<div style="background:#141618;border:1px solid #242628;border-radius:8px;overflow:hidden;margin-bottom:16px;break-inside:avoid;">
+<div style="background:#0088a020;border-bottom:1px solid #0088a040;padding:12px 14px;">
+  <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:8px;flex-wrap:wrap;margin-bottom:6px;">
+    <div><span style="font-family:DM Mono,monospace;font-size:17px;font-weight:700;color:#f0ece4;">DRAM</span><span style="font-size:11px;color:#f0ece4;margin-left:9px;opacity:0.9;">Roundhill Memory ETF</span></div>
+    <div style="display:flex;gap:5px;flex-wrap:wrap;"><span style="background:#0088a022;border:1px solid #0088a088;color:#0088a0;font-size:9px;padding:2px 7px;border-radius:3px;font-family:DM Mono,monospace;font-weight:700;white-space:nowrap;">AI DC HW 94%</span></div>
+  </div>
+  <div style="font-size:11px;color:#f0ece4;opacity:0.7;line-height:1.5;">Pure-play memory semiconductor exposure. Top 3 account for ~72% of fund. HBM and NAND supply chain in a single vehicle. Top 6 confirmed; remainder are estimated smaller positions.</div>
+</div>
+<div style="padding:10px 14px;">
+  <div style="margin-top:8px;font-size:9px;"><span style="color:#f0b429;">&#x25cf;</span> <span style="color:rgba(240,236,228,0.4);letter-spacing:.03em;">Top holdings confirmed · lower weights approximate</span></div>
+
+</div>
+<div style="background:#141618;border:1px solid #242628;border-radius:8px;overflow:hidden;margin-bottom:16px;break-inside:avoid;">
+<div style="background:#0088a020;border-bottom:1px solid #0088a040;padding:12px 14px;">
+  <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:8px;flex-wrap:wrap;margin-bottom:6px;">
+    <div><span style="font-family:DM Mono,monospace;font-size:17px;font-weight:700;color:#f0ece4;">SMH</span><span style="font-size:11px;color:#f0ece4;margin-left:9px;opacity:0.9;">VanEck Semiconductor ETF</span></div>
+    <div style="display:flex;gap:5px;flex-wrap:wrap;"><span style="background:#0088a022;border:1px solid #0088a088;color:#0088a0;font-size:9px;padding:2px 7px;border-radius:3px;font-family:DM Mono,monospace;font-weight:700;white-space:nowrap;">AI DC HW 72%</span></div>
+  </div>
+  <div style="font-size:11px;color:#f0ece4;opacity:0.7;line-height:1.5;">Broad semiconductor exposure. NVDA (19.4%), TSM (11.7%), AVGO (7.7%) — diversified chip stack in one vehicle. Key reason TSM not added individually in HC: already 11.7% of this ETF.</div>
+</div>
+<div style="padding:10px 14px;">
+  <div style="margin-top:8px;font-size:9px;"><span style="color:#70f0a0;">&#x25cf;</span> <span style="color:rgba(240,236,228,0.4);letter-spacing:.03em;">Holdings confirmed from TWS research data</span></div>
+
+</div>
+<div style="grid-column:1/-1;margin-bottom:4px;margin-top:8px;"><span style="font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:#48a8e8;font-weight:600;">&#9632; Defense &amp; Energy ETFs</span></div>
+<div style="background:#141618;border:1px solid #242628;border-radius:8px;overflow:hidden;margin-bottom:16px;break-inside:avoid;">
+<div style="background:#0088a020;border-bottom:1px solid #0088a040;padding:12px 14px;">
+  <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:8px;flex-wrap:wrap;margin-bottom:6px;">
+    <div><span style="font-family:DM Mono,monospace;font-size:17px;font-weight:700;color:#f0ece4;">NLR</span><span style="font-size:11px;color:#f0ece4;margin-left:9px;opacity:0.9;">VanEck Uranium & Nuclear ETF</span></div>
+    <div style="display:flex;gap:5px;flex-wrap:wrap;"><span style="background:#78909c22;border:1px solid #78909c88;color:#78909c;font-size:9px;padding:2px 7px;border-radius:3px;font-family:DM Mono,monospace;font-weight:700;white-space:nowrap;">Energy/Min 90%</span></div>
+  </div>
+  <div style="font-size:11px;color:#f0ece4;opacity:0.7;line-height:1.5;">Uranium miners + nuclear power utilities. BWXT (6.9%) inside — minimal duplication with BWXT direct position in HC. Full uranium supply chain: mining (CCJ, NXE) to power (CEG) to reactors (BWXT, OKLO).</div>
+</div>
+<div style="padding:10px 14px;">
+  <div style="margin-top:8px;font-size:9px;"><span style="color:#f0b429;">&#x25cf;</span> <span style="color:rgba(240,236,228,0.4);letter-spacing:.03em;">Top holdings confirmed · lower weights approximate</span></div>
+
+</div>
+<div style="background:#141618;border:1px solid #242628;border-radius:8px;overflow:hidden;margin-bottom:16px;break-inside:avoid;">
+<div style="background:#0088a020;border-bottom:1px solid #0088a040;padding:12px 14px;">
+  <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:8px;flex-wrap:wrap;margin-bottom:6px;">
+    <div><span style="font-family:DM Mono,monospace;font-size:17px;font-weight:700;color:#f0ece4;">SHLD</span><span style="font-size:11px;color:#f0ece4;margin-left:9px;opacity:0.9;">Global X Defense Tech ETF</span></div>
+    <div style="display:flex;gap:5px;flex-wrap:wrap;"><span style="background:#48a8e822;border:1px solid #48a8e888;color:#48a8e8;font-size:9px;padding:2px 7px;border-radius:3px;font-family:DM Mono,monospace;font-weight:700;white-space:nowrap;">Aero/Def 79%</span></div>
+  </div>
+  <div style="font-size:11px;color:#f0ece4;opacity:0.7;line-height:1.5;">Defense technology companies covering AI, autonomy, and cybersecurity for defense applications. Palantir typically the largest holding. Holdings are approximate — verify at Global X website before trading.</div>
+</div>
+<div style="padding:10px 14px;">
+  <div style="margin-top:8px;font-size:9px;"><span style="color:#78909c;">&#x25cf;</span> <span style="color:rgba(240,236,228,0.4);letter-spacing:.03em;">Holdings approximate — verify at ETF provider website</span></div>
+</div>
+</div>
+<div style="background:#141618;border:1px solid #242628;border-radius:8px;overflow:hidden;margin-bottom:16px;break-inside:avoid;">
+<div style="background:#0088a020;border-bottom:1px solid #0088a040;padding:12px 14px;">
+  <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:8px;flex-wrap:wrap;margin-bottom:6px;">
+    <div><span style="font-family:DM Mono,monospace;font-size:17px;font-weight:700;color:#f0ece4;">XLI</span><span style="font-size:11px;color:#f0ece4;margin-left:9px;opacity:0.9;">Industrial Select Sector SPDR</span></div>
+    <div style="display:flex;gap:5px;flex-wrap:wrap;"></div>
+  </div>
+  <div style="font-size:11px;color:#f0ece4;opacity:0.7;line-height:1.5;">Broad US industrials — alternative to NLR for defense/aerospace/infrastructure exposure without nuclear concentration. ~90% Enterprise Giants by market cap. Top holdings include GE Aerospace, RTX, Caterpillar, Union Pacific, Honeywell.</div>
+</div>
+<div style="padding:10px 14px;">
+  <div style="margin-top:8px;font-size:9px;"><span style="color:#f0ece4;">&#x25cf;</span> <span style="color:rgba(240,236,228,0.4);letter-spacing:.03em;">Holdings approximate — verify at ETF provider website</span></div>
+</div>
+<div style="grid-column:1/-1;margin-bottom:4px;margin-top:8px;"><span style="font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:#c084fc;font-weight:600;">&#9632; Commodities &amp; Minerals ETF</span></div>
+<div style="background:#141618;border:1px solid #242628;border-radius:8px;overflow:hidden;margin-bottom:16px;break-inside:avoid;">
+<div style="background:#0088a020;border-bottom:1px solid #0088a040;padding:12px 14px;">
+  <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:8px;flex-wrap:wrap;margin-bottom:6px;">
+    <div><span style="font-family:DM Mono,monospace;font-size:17px;font-weight:700;color:#f0ece4;">EWZ</span><span style="font-size:11px;color:#f0ece4;margin-left:9px;opacity:0.9;">iShares MSCI Brazil ETF</span></div>
+    <div style="display:flex;gap:5px;flex-wrap:wrap;"></div>
+  </div>
+  <div style="font-size:11px;color:#f0ece4;opacity:0.7;line-height:1.5;">Broad EM exposure via Brazil — spans financials (Itaú, Bradesco), commodities (Petrobras, Vale), and consumer names. Non-dollar diversification with commodity cycle sensitivity. Classified as Broad international in portfolio allocation. EG ~17% · SI ~40% · ED ~43%.</div>
+</div>
+<div style="padding:10px 14px;">
+  <table style="width:100%;border-collapse:collapse;"><tbody>
+  </tbody></table>
+<div style="background:#141618;border:1px solid #242628;border-radius:8px;overflow:hidden;margin-bottom:16px;break-inside:avoid;">
+<div style="background:#0088a020;border-bottom:1px solid #0088a040;padding:12px 14px;">
+  <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:8px;flex-wrap:wrap;margin-bottom:6px;">
+    <div><span style="font-family:DM Mono,monospace;font-size:17px;font-weight:700;color:#f0ece4;">COPX</span><span style="font-size:11px;color:#f0ece4;margin-left:9px;opacity:0.9;">Global X Copper Miners ETF</span></div>
+    <div style="display:flex;gap:5px;flex-wrap:wrap;"><span style="background:#78909c22;border:1px solid #78909c88;color:#78909c;font-size:9px;padding:2px 7px;border-radius:3px;font-family:DM Mono,monospace;font-weight:700;white-space:nowrap;">Energy/Min 85%</span></div>
+  </div>
+  <div style="font-size:11px;color:#f0ece4;opacity:0.7;line-height:1.5;">Global copper mining companies. Direct data center copper demand play: each large-scale data center requires 50-200+ tons of copper for wiring and cooling. Alt option: REMX for rare earth / critical minerals exposure.</div>
+</div>
+<div style="padding:10px 14px;">
+  <div style="margin-top:8px;font-size:9px;"><span style="color:#78909c;">&#x25cf;</span> <span style="color:rgba(240,236,228,0.4);letter-spacing:.03em;">Holdings approximate — verify at ETF provider website</span></div>
+</div>
+<div style="background:#141618;border:1px solid #242628;border-radius:8px;overflow:hidden;margin-bottom:16px;break-inside:avoid;">
+<div style="background:#0088a020;border-bottom:1px solid #0088a040;padding:12px 14px;">
+  <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:8px;flex-wrap:wrap;margin-bottom:6px;">
+    <div><span style="font-family:DM Mono,monospace;font-size:17px;font-weight:700;color:#f0ece4;">REMX</span><span style="font-size:11px;color:#f0ece4;margin-left:9px;opacity:0.9;">VanEck Rare Earth &amp; Strategic Metals ETF</span></div>
+    <div style="display:flex;gap:5px;flex-wrap:wrap;"><span style="background:#78909c22;border:1px solid #78909c88;color:#78909c;font-size:9px;padding:2px 7px;border-radius:3px;font-family:DM Mono,monospace;font-weight:700;white-space:nowrap;">Energy/Min 90%</span></div>
+  </div>
+  <div style="font-size:11px;color:#f0ece4;opacity:0.7;line-height:1.5;">Rare earth miners + lithium + strategic metals. Critical materials for AI hardware, EVs, and defense systems. MP Materials and Lynas supply rare earth oxides for permanent magnets used in robots and EVs. Holdings approximate.</div>
+</div>
+<div style="padding:10px 14px;">
+  <div style="margin-top:8px;font-size:9px;"><span style="color:#78909c;">&#x25cf;</span> <span style="color:rgba(240,236,228,0.4);letter-spacing:.03em;">Holdings approximate — verify at ETF provider website</span></div>
+</div><div style="font-size:9px;margin-top:7px;"><span style="color:#28c868;">&#x25cf;</span> <span style="color:rgba(240,236,228,0.4);letter-spacing:.03em;">Holdings approximate — verify at ETF provider website</span></div>
+<div style="grid-column:1/-1;margin-bottom:4px;margin-top:8px;"><span style="font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:#1860c0;font-weight:600;">&#9632; Cybersecurity</span></div><div style="grid-column:1/-1;"><div style="background:#141618;border:1px solid #242628;border-radius:8px;overflow:hidden;margin-bottom:16px;break-inside:avoid;">
+<div style="background:#0088a020;border-bottom:1px solid #0088a040;padding:12px 14px;">
+  <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:8px;flex-wrap:wrap;margin-bottom:6px;">
+    <div><span style="font-family:DM Mono,monospace;font-size:17px;font-weight:700;color:#f0ece4;">CIBR</span><span style="font-size:11px;color:#f0ece4;margin-left:9px;opacity:0.9;">First Trust NASDAQ Cybersecurity ETF</span></div>
+  </div>
+  <div style="font-size:11px;color:#f0ece4;opacity:0.7;line-height:1.5;">WARNING: ~29% pure cybersecurity (PANW/CRWD/FTNT/NET) and ~40% semiconductor names (AVGO/AMAT/INTC/MU/MRVL). True portfolio cybersecurity exposure is approximately 1% — not the 3% the allocation implies.</div>
+</div>
+<div style="padding:10px 14px;">
+  <div style="margin-top:8px;font-size:9px;"><span style="color:#70f0a0;">&#x25cf;</span> <span style="color:rgba(240,236,228,0.4);letter-spacing:.03em;">Holdings confirmed from TWS research data</span></div>
+</div></div>
+</div>
+</div>
+  
+</div>
+</div>
+<div id="cls0" style="">
+</div></div>
+<div <div <div id="cls1" style="display:none;">
+</div></div>
+<div <div <div id="cls2" style="display:none;">
+</div></div>
+
+<script>
+(function(){
+const API_KEY='balqGUXWGnzyb_GC59na19MelADH0ruZ';
+const YTD_START='2026-01-02';
+const PORTFOLIOS={};
+
+PORTFOLIOS['def']={};
+PORTFOLIOS['def']['Core ETFs']={alloc:41,tickers:[{t:'VTI',w:9},{t:'VXUS',w:10},{t:'GLDM',w:6},{t:'VOO',w:5},{t:'IBIT',w:6},{t:'SCHD',w:5}]};
+PORTFOLIOS['def']['Thematic ETFs']={alloc:24,tickers:[{t:'AIPO',w:4},{t:'SHLD',w:5},{t:'NLR',w:3},{t:'TCAI',w:3},{t:'SLV',w:4},{t:'DRAM',w:3},{t:'CIBR',w:2}]};
+PORTFOLIOS['def']['Core Stocks']={alloc:25,tickers:[{t:'MU',w:4},{t:'MRVL',w:4},{t:'AMZN',w:3},{t:'PLTR',w:3},{t:'VRT',w:3},{t:'ETN',w:3},{t:'NOW',w:2},{t:'LLY',w:3}]};
+PORTFOLIOS['def']['Asymmetric Bets']={alloc:10,tickers:[{t:'RKLB',w:3},{t:'NBIS',w:3},{t:'VPG',w:2},{t:'BE',w:2}]};
+
+PORTFOLIOS['agg']={};
+PORTFOLIOS['agg']['Core ETFs']={alloc:36,tickers:[{t:'VTI',w:8},{t:'VXUS',w:7},{t:'IBIT',w:7},{t:'GLDM',w:4},{t:'QQQM',w:4},{t:'SCHD',w:6}]};
+PORTFOLIOS['agg']['Thematic ETFs']={alloc:23,tickers:[{t:'AIPO',w:4},{t:'NLR',w:4},{t:'SMH',w:3},{t:'SHLD',w:3},{t:'CIBR',w:3},{t:'DRAM',w:3},{t:'COPX',w:3}]};
+PORTFOLIOS['agg']['Core Stocks']={alloc:30,tickers:[{t:'MU',w:5},{t:'AMZN',w:4},{t:'MRVL',w:5},{t:'ETN',w:4},{t:'NOW',w:3},{t:'TSLA',w:4},{t:'RKLB',w:3},{t:'HOOD',w:2}]};
+PORTFOLIOS['agg']['Asymmetric Bets']={alloc:11,tickers:[{t:'HIMS',w:2},{t:'NBIS',w:3},{t:'ASTS',w:2},{t:'BE',w:2},{t:'AAOI',w:2}]};
+
+PORTFOLIOS['hc']={};
+PORTFOLIOS['hc']['Core ETFs']={alloc:28,tickers:[{t:'VTI',w:7},{t:'IBIT',w:9},{t:'VXUS',w:6},{t:'GLDM',w:4},{t:'QQQM',w:2}]};
+PORTFOLIOS['hc']['Thematic ETFs']={alloc:20,tickers:[{t:'AIPO',w:4},{t:'SMH',w:3},{t:'NLR',w:4},{t:'TCAI',w:3},{t:'DRAM',w:3},{t:'SLV',w:3}]};
+PORTFOLIOS['hc']['Core Stocks']={alloc:38,tickers:[{t:'AMD',w:5},{t:'MU',w:4},{t:'PLTR',w:4},{t:'MRVL',w:4},{t:'VST',w:3},{t:'AMZN',w:4},{t:'MOD',w:3},{t:'TSLA',w:4},{t:'TER',w:2},{t:'NOW',w:3},{t:'LLY',w:2}]};
+PORTFOLIOS['hc']['Asymmetric Bets']={alloc:14,tickers:[{t:'RKLB',w:4},{t:'NBIS',w:3},{t:'BE',w:2},{t:'AAOI',w:3},{t:'OKLO',w:1},{t:'ASTS',w:1}]};
+
+const priceCache={};
+
+async function fetchClose(ticker,date){
+  const key=ticker+'_'+date;
+  if(priceCache[key]) return priceCache[key];
+  try{
+    const r=await fetch(`https://api.polygon.io/v2/aggs/ticker/${ticker}/range/1/day/${date}/${date}?adjusted=true&apiKey=${API_KEY}`);
+    const d=await r.json();
+    if(d.results&&d.results[0]){priceCache[key]=d.results[0].o;return d.results[0].o;}
+    const r2=await fetch(`https://api.polygon.io/v2/aggs/ticker/${ticker}/range/1/day/2026-01-02/2026-01-07?adjusted=true&apiKey=${API_KEY}`);
+    const d2=await r2.json();
+    const v=d2.results&&d2.results[0]?d2.results[0].o:null;
+    priceCache[key]=v;return v;
+  }catch(e){return null;}
+}
+
+async function isMarketOpen(){
+  const now=new Date();
+  const et=new Date(now.toLocaleString('en-US',{timeZone:'America/New_York'}));
+  const day=et.getDay();
+  if(day===0||day===6) return false;
+  const h=et.getHours(),m=et.getMinutes();
+  const mins=h*60+m;
+  return mins>=570&&mins<960; // 9:30am=570, 4:00pm=960
+}
+async function fetchLatest(ticker){
+  const key=ticker+'_latest';
+  if(priceCache[key]) return priceCache[key];
+  try{
+    const open=await isMarketOpen();
+    if(open){
+      // Market open — try today's data
+      const today=new Date().toISOString().split('T')[0];
+      const r=await fetch(`https://api.polygon.io/v2/aggs/ticker/${ticker}/range/1/day/${today}/${today}?adjusted=true&apiKey=${API_KEY}`);
+      const d=await r.json();
+      if(d.results&&d.results[0]){priceCache[key]=d.results[0].c;return d.results[0].c;}
+    }
+    // Market closed or no intraday data — use most recent close from /prev
+    const r2=await fetch(`https://api.polygon.io/v2/aggs/ticker/${ticker}/prev?adjusted=true&apiKey=${API_KEY}`);
+    const d2=await r2.json();
+    const v=d2.results&&d2.results[0]?d2.results[0].c:null;
+    priceCache[key]=v;return v;
+  }catch(e){return null;}
+}
+
+function get30DAgo(){
+  const d=new Date();d.setDate(d.getDate()-30);
+  return d.toISOString().split('T')[0];
+}
+
+function fmtPct(v){
+  const sign=v>=0?'+':'-';
+  const col=v>=0?'#22c55e':'#ef4444';
+  return `<span style="color:${col};">${sign}${Math.abs(v).toFixed(2)}%</span>`;
+}
+
+function fmtTotal(ytdPct){
+  const dollars=Math.round(300000*(ytdPct/100));
+  const sign=ytdPct>=0?'+':'-';
+  const col=ytdPct>=0?'#22c55e':'#ef4444';
+  return `<span style="color:${col};">${sign}${Math.abs(ytdPct).toFixed(2)}%</span>`;
+}
+
+async function calcLayer(tickers,d30ago){
+  let ytdNum=0,d30Num=0,totalW=0;
+  for(const {t,w} of tickers){
+    const[cur,ytdP,d30P]=await Promise.all([fetchLatest(t),fetchClose(t,YTD_START),fetchClose(t,d30ago)]);
+    if(!cur||!ytdP||!d30P) continue;
+    ytdNum+=((cur-ytdP)/ytdP*100)*w;
+    d30Num+=((cur-d30P)/d30P*100)*w;
+    totalW+=w;
+  }
+  return totalW>0?{ytd:ytdNum/totalW,d30:d30Num/totalW}:null;
+}
+
+async function refreshAll(){
+  const d30=get30DAgo();
+  for(const pid of['def','agg','hc']){
+    const layers=PORTFOLIOS[pid];
+    let portYTD=0,port30=0;
+    for(const[lname,ldata]of Object.entries(layers)){
+      const sfx=lname.replace(/ /g,'_').toLowerCase();
+      const res=await calcLayer(ldata.tickers,d30);
+      if(res){
+        const el30=document.getElementById(pid+'_30d_'+sfx);
+        const elYTD=document.getElementById(pid+'_ytd_'+sfx);
+        if(el30) el30.innerHTML=fmtPct(res.d30);
+        if(elYTD) elYTD.innerHTML=fmtPct(res.ytd);
+        portYTD+=res.ytd*(ldata.alloc/100);
+        port30+=res.d30*(ldata.alloc/100);
+      }
+    }
+    const totYTD=document.getElementById(pid+'_ytd_total');
+    const tot30=document.getElementById(pid+'_30d_total');
+    if(totYTD) totYTD.innerHTML=fmtTotal(portYTD);
+    if(tot30)  tot30.innerHTML=fmtTotal(port30);
+    const ts=document.getElementById(pid+'_ts');
+    if(ts){
+      const open=await isMarketOpen();
+      const status=open?' · Market Open':' · Market Closed';
+      ts.textContent='Updated '+new Date().toLocaleTimeString()+status;
+    }
+    for(const[btick,bkey]of[['SPY','spy'],['QQQ','qqq']]){
+      const[bcur,bYTD,b30d]=await Promise.all([fetchLatest(btick),fetchClose(btick,YTD_START),fetchClose(btick,d30)]);
+      if(bcur&&bYTD){const bel=document.getElementById(pid+'_ytd_'+bkey);if(bel)bel.innerHTML=fmtPct((bcur-bYTD)/bYTD*100);}
+      if(bcur&&b30d){const bel=document.getElementById(pid+'_30d_'+bkey);if(bel)bel.innerHTML=fmtPct((bcur-b30d)/b30d*100);}
+    }
+  }
+}
+
+refreshAll();
+setInterval(()=>{Object.keys(priceCache).filter(k=>k.includes('_latest')).forEach(k=>delete priceCache[k]);refreshAll();},900000);
+})();
+</script>
+
+<!-- ═══════════════════════════════════════════════════
+     PORTFOLIO MATRIX TAB
+═══════════════════════════════════════════════════ -->
+<div id="port4" style="display:none;">
+  <div style="max-width:1100px;margin:0 auto;padding:0 12px 40px;">
+
+    <!-- CHART 1: Framework -->
+    <div style="background:#0d0f10;border-radius:10px;overflow:hidden;margin-bottom:28px;">
+      <div style="padding:18px 22px 14px;background:#0d0f10;border-bottom:1px solid #242628;">
+        <div style="font-size:20px;font-weight:700;color:#f0ece4;letter-spacing:.02em;text-transform:uppercase;font-family:DM Sans,sans-serif;">AI Supercycle Portfolio Framework</div>
+        <div style="font-size:10px;font-weight:700;color:#8af8fa;letter-spacing:.1em;text-transform:uppercase;margin-top:3px;font-family:DM Sans,sans-serif;">By Wealth Risk Profile</div>
+        <div style="width:40px;height:3px;background:#8af8fa;margin-top:7px;border-radius:2px;"></div>
+        <div style="font-size:11px;color:rgba(240,236,228,0.45);margin-top:10px;font-style:italic;font-family:DM Sans,sans-serif;">Guidance ranges — not required, but recommended guardrails. # of positions () are just a common range.</div>
+      </div>
+      <table style="width:100%;border-collapse:collapse;font-size:12px;">
+        <thead>
+          <tr style="background:#141618;">
+            <th style="padding:10px 14px;font-weight:700;font-size:11px;letter-spacing:.06em;text-transform:uppercase;text-align:left;color:rgba(240,236,228,0.6);border-bottom:2px solid #8af8fa;font-family:DM Sans,sans-serif;">Layers</th>
+            <th style="padding:10px 12px;font-weight:700;font-size:11px;letter-spacing:.06em;text-transform:uppercase;text-align:center;color:#f0ece4;border-bottom:2px solid #8af8fa;font-family:DM Sans,sans-serif;">Starter</th>
+            <th style="padding:10px 12px;font-weight:700;font-size:11px;letter-spacing:.06em;text-transform:uppercase;text-align:center;color:#f0ece4;border-bottom:2px solid #8af8fa;font-family:DM Sans,sans-serif;">Futurist</th>
+            <th style="padding:10px 12px;font-weight:700;font-size:11px;letter-spacing:.06em;text-transform:uppercase;text-align:center;color:#f0ece4;border-bottom:2px solid #8af8fa;font-family:DM Sans,sans-serif;">Explorer</th>
+            <th style="padding:10px 12px;font-weight:700;font-size:11px;letter-spacing:.06em;text-transform:uppercase;text-align:center;color:#f0ece4;border-bottom:2px solid #8af8fa;font-family:DM Sans,sans-serif;">Maverick</th>
+            <th style="padding:10px 12px;font-weight:700;font-size:11px;letter-spacing:.06em;text-transform:uppercase;text-align:center;color:#f0ece4;border-bottom:2px solid #8af8fa;font-family:DM Sans,sans-serif;">Strategist</th>
+            <th style="padding:10px 12px;font-weight:700;font-size:11px;letter-spacing:.06em;text-transform:uppercase;text-align:center;color:#f0ece4;border-bottom:2px solid #8af8fa;font-family:DM Sans,sans-serif;">Comeback</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr style="border-bottom:0.5px solid #1e2022;">
+            <td style="padding:12px 14px;text-align:left;font-weight:700;color:#f0ece4;font-family:DM Sans,sans-serif;">Core ETFs</td>
+            <td style="padding:12px;text-align:center;color:#f0ece4;font-family:DM Sans,sans-serif;">40–50% (5-6)</td>
+            <td style="padding:12px;text-align:center;color:#f0ece4;font-family:DM Sans,sans-serif;">30%–40% (5-6)</td>
+            <td style="padding:12px;text-align:center;color:#f0ece4;font-family:DM Sans,sans-serif;">30%–40% (5-6)</td>
+            <td style="padding:12px;text-align:center;color:#f0ece4;font-family:DM Sans,sans-serif;">30%–40% (5-6)</td>
+            <td style="padding:12px;text-align:center;color:#f0ece4;font-family:DM Sans,sans-serif;">40%–50% (5-6)</td>
+            <td style="padding:12px;text-align:center;color:#f0ece4;font-family:DM Sans,sans-serif;">35%–45% (6-7)</td>
+          </tr>
+          <tr style="border-bottom:0.5px solid #1e2022;">
+            <td style="padding:12px 14px;text-align:left;font-weight:700;color:#f0ece4;font-family:DM Sans,sans-serif;">Thematic ETFs</td>
+            <td style="padding:12px;text-align:center;color:#f0ece4;font-family:DM Sans,sans-serif;">20%–25% (4-6)</td>
+            <td style="padding:12px;text-align:center;color:#f0ece4;font-family:DM Sans,sans-serif;">15%–25% (5-7)</td>
+            <td style="padding:12px;text-align:center;color:#f0ece4;font-family:DM Sans,sans-serif;">20%–30% (5-7)</td>
+            <td style="padding:12px;text-align:center;color:#f0ece4;font-family:DM Sans,sans-serif;">15%–25% (5-7)</td>
+            <td style="padding:12px;text-align:center;color:#f0ece4;font-family:DM Sans,sans-serif;">20%–30% (5-7)</td>
+            <td style="padding:12px;text-align:center;color:#f0ece4;font-family:DM Sans,sans-serif;">20%–30% (5-6)</td>
+          </tr>
+          <tr style="border-bottom:0.5px solid #1e2022;">
+            <td style="padding:12px 14px;text-align:left;font-weight:700;color:#f0ece4;font-family:DM Sans,sans-serif;">Core Stocks</td>
+            <td style="padding:12px;text-align:center;color:#f0ece4;font-family:DM Sans,sans-serif;">20%–25% (6-8)</td>
+            <td style="padding:12px;text-align:center;color:#f0ece4;font-family:DM Sans,sans-serif;">30%–35% (8-11)</td>
+            <td style="padding:12px;text-align:center;color:#f0ece4;font-family:DM Sans,sans-serif;">25%–35% (7-10)</td>
+            <td style="padding:12px;text-align:center;color:#f0ece4;font-family:DM Sans,sans-serif;">30%–40% (8-12)</td>
+            <td style="padding:12px;text-align:center;color:#f0ece4;font-family:DM Sans,sans-serif;">20%–25% (7-9)</td>
+            <td style="padding:12px;text-align:center;color:#f0ece4;font-family:DM Sans,sans-serif;">25%–35% (7-10)</td>
+          </tr>
+          <tr style="border-bottom:0.5px solid #1e2022;">
+            <td style="padding:12px 14px;text-align:left;font-weight:700;color:#f0ece4;font-family:DM Sans,sans-serif;">Asymmetrical Bets</td>
+            <td style="padding:12px;text-align:center;color:#f0ece4;font-family:DM Sans,sans-serif;">5%–10% (3-4)</td>
+            <td style="padding:12px;text-align:center;color:#f0ece4;font-family:DM Sans,sans-serif;">10%–15% (4-6)</td>
+            <td style="padding:12px;text-align:center;color:#f0ece4;font-family:DM Sans,sans-serif;">7%–13% (4-5)</td>
+            <td style="padding:12px;text-align:center;color:#f0ece4;font-family:DM Sans,sans-serif;">5%–15% (4-6)</td>
+            <td style="padding:12px;text-align:center;color:#f0ece4;font-family:DM Sans,sans-serif;">5%–10% (3-5)</td>
+            <td style="padding:12px;text-align:center;color:#f0ece4;font-family:DM Sans,sans-serif;">7%–13% (4-5)</td>
+          </tr>
+          <tr style="background:#8af8fa;">
+            <td style="padding:12px 14px;text-align:left;font-weight:700;color:#0d0f10;font-family:DM Sans,sans-serif;">Total</td>
+            <td style="padding:12px;text-align:center;font-weight:700;color:#0d0f10;font-family:DM Sans,sans-serif;">100%</td>
+            <td style="padding:12px;text-align:center;font-weight:700;color:#0d0f10;font-family:DM Sans,sans-serif;">100%</td>
+            <td style="padding:12px;text-align:center;font-weight:700;color:#0d0f10;font-family:DM Sans,sans-serif;">100%</td>
+            <td style="padding:12px;text-align:center;font-weight:700;color:#0d0f10;font-family:DM Sans,sans-serif;">100%</td>
+            <td style="padding:12px;text-align:center;font-weight:700;color:#0d0f10;font-family:DM Sans,sans-serif;">100%</td>
+            <td style="padding:12px;text-align:center;font-weight:700;color:#0d0f10;font-family:DM Sans,sans-serif;">100%</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- CHART 2: Sector Guardrails -->
+    <div style="background:#0d0f10;border-radius:10px;overflow:hidden;">
+      <div style="padding:18px 22px 14px;background:#0d0f10;border-bottom:1px solid #242628;">
+        <div style="font-size:20px;font-weight:700;color:#f0ece4;letter-spacing:.02em;text-transform:uppercase;font-family:DM Sans,sans-serif;">Sector Guardrails</div>
+        <div style="font-size:10px;font-weight:700;color:#8af8fa;letter-spacing:.1em;text-transform:uppercase;margin-top:3px;font-family:DM Sans,sans-serif;">% of Full Portfolio &middot; By Wealth Risk Profile</div>
+        <div style="width:40px;height:3px;background:#8af8fa;margin-top:7px;border-radius:2px;"></div>
+        <div style="font-size:11px;color:rgba(240,236,228,0.45);margin-top:10px;font-style:italic;font-family:DM Sans,sans-serif;">Not required, but recommended sector exposure guardrails as % of full 100% portfolio.</div>
+      </div>
+      <table style="width:100%;border-collapse:collapse;font-size:12px;">
+        <thead>
+          <tr style="background:#141618;">
+            <th style="padding:10px 14px;font-weight:700;font-size:11px;letter-spacing:.06em;text-transform:uppercase;text-align:left;color:rgba(240,236,228,0.6);border-bottom:2px solid #8af8fa;font-family:DM Sans,sans-serif;">Sector</th>
+            <th style="padding:10px 12px;font-weight:700;font-size:11px;letter-spacing:.06em;text-transform:uppercase;text-align:center;color:#f0ece4;border-bottom:2px solid #8af8fa;font-family:DM Sans,sans-serif;">Starter</th>
+            <th style="padding:10px 12px;font-weight:700;font-size:11px;letter-spacing:.06em;text-transform:uppercase;text-align:center;color:#f0ece4;border-bottom:2px solid #8af8fa;font-family:DM Sans,sans-serif;">Futurist</th>
+            <th style="padding:10px 12px;font-weight:700;font-size:11px;letter-spacing:.06em;text-transform:uppercase;text-align:center;color:#f0ece4;border-bottom:2px solid #8af8fa;font-family:DM Sans,sans-serif;">Explorer</th>
+            <th style="padding:10px 12px;font-weight:700;font-size:11px;letter-spacing:.06em;text-transform:uppercase;text-align:center;color:#f0ece4;border-bottom:2px solid #8af8fa;font-family:DM Sans,sans-serif;">Maverick</th>
+            <th style="padding:10px 12px;font-weight:700;font-size:11px;letter-spacing:.06em;text-transform:uppercase;text-align:center;color:#f0ece4;border-bottom:2px solid #8af8fa;font-family:DM Sans,sans-serif;">Strategist</th>
+            <th style="padding:10px 12px;font-weight:700;font-size:11px;letter-spacing:.06em;text-transform:uppercase;text-align:center;color:#f0ece4;border-bottom:2px solid #8af8fa;font-family:DM Sans,sans-serif;">Comeback</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr style="background:#141618;border-top:1px solid #242628;">
+            <td colspan="7" style="padding:6px 14px;font-size:9px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#8af8fa;font-family:DM Sans,sans-serif;">Core ETF Sleeve — internal allocations</td>
+          </tr>
+          <tr style="border-bottom:0.5px solid #1e2022;">
+            <td style="padding:10px 14px;text-align:left;color:#f0ece4;font-family:DM Sans,sans-serif;"><span style="display:inline-block;width:7px;height:7px;border-radius:2px;background:#8af8fa;margin-right:7px;vertical-align:middle;"></span>Broad-Based ETFs</td>
+          </tr>
+          <tr style="border-bottom:0.5px solid #1e2022;">
+            <td style="padding:10px 14px;text-align:left;color:#f0ece4;font-family:DM Sans,sans-serif;"><span style="display:inline-block;width:7px;height:7px;border-radius:2px;background:#d4a030;margin-right:7px;vertical-align:middle;"></span>Gold &amp; Commodities</td>
+          </tr>
+          <tr style="border-bottom:0.5px solid #1e2022;">
+            <td style="padding:10px 14px;text-align:left;color:#f0ece4;font-family:DM Sans,sans-serif;"><span style="display:inline-block;width:7px;height:7px;border-radius:2px;background:#ff8c00;margin-right:7px;vertical-align:middle;"></span>Bitcoin</td>
+          </tr>
+          <tr style="border-bottom:0.5px solid #1e2022;">
+            <td style="padding:10px 14px;text-align:left;color:#f0ece4;font-family:DM Sans,sans-serif;"><span style="display:inline-block;width:7px;height:7px;border-radius:2px;background:rgba(240,236,228,0.7);margin-right:7px;vertical-align:middle;"></span>Passive Income</td>
+          </tr>
+          <tr style="background:#141618;border-top:1px solid #242628;">
+            <td colspan="7" style="padding:6px 14px;font-size:9px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#8af8fa;font-family:DM Sans,sans-serif;">Thematic ETF + Stock Sleeve — sector guardrails</td>
+          </tr>
+          <tr style="border-bottom:0.5px solid #1e2022;">
+            <td style="padding:10px 14px;text-align:left;color:#f0ece4;font-family:DM Sans,sans-serif;"><span style="display:inline-block;width:7px;height:7px;border-radius:2px;background:#0088a0;margin-right:7px;vertical-align:middle;"></span>AI Hardware</td>
+          </tr>
+          <tr style="border-bottom:0.5px solid #1e2022;">
+            <td style="padding:10px 14px;text-align:left;color:#f0ece4;font-family:DM Sans,sans-serif;"><span style="display:inline-block;width:7px;height:7px;border-radius:2px;background:#00bcd4;margin-right:7px;vertical-align:middle;"></span>AI Infrastructure</td>
+          </tr>
+          <tr style="border-bottom:0.5px solid #1e2022;">
+            <td style="padding:10px 14px;text-align:left;color:#f0ece4;font-family:DM Sans,sans-serif;"><span style="display:inline-block;width:7px;height:7px;border-radius:2px;background:#78909c;margin-right:7px;vertical-align:middle;"></span>Energy / Minerals</td>
+          </tr>
+          <tr style="border-bottom:0.5px solid #1e2022;">
+            <td style="padding:10px 14px;text-align:left;color:#f0ece4;font-family:DM Sans,sans-serif;"><span style="display:inline-block;width:7px;height:7px;border-radius:2px;background:#48a8e8;margin-right:7px;vertical-align:middle;"></span>Aerospace / Defense</td>
+          </tr>
+          <tr style="border-bottom:0.5px solid #1e2022;">
+            <td style="padding:10px 14px;text-align:left;color:#f0ece4;font-family:DM Sans,sans-serif;"><span style="display:inline-block;width:7px;height:7px;border-radius:2px;background:#70f0a0;margin-right:7px;vertical-align:middle;"></span>Robotics</td>
+          </tr>
+          <tr style="border-bottom:0.5px solid #1e2022;">
+            <td style="padding:10px 14px;text-align:left;color:#f0ece4;font-family:DM Sans,sans-serif;"><span style="display:inline-block;width:7px;height:7px;border-radius:2px;background:#28c868;margin-right:7px;vertical-align:middle;"></span>Disruptive Technology</td>
+          </tr>
+          <tr style="border-bottom:0.5px solid #1e2022;">
+            <td style="padding:10px 14px;text-align:left;color:#f0ece4;font-family:DM Sans,sans-serif;"><span style="display:inline-block;width:7px;height:7px;border-radius:2px;background:#1860c0;margin-right:7px;vertical-align:middle;"></span>Cybersecurity</td>
+          </tr>
+          <tr>
+            <td style="padding:10px 14px;text-align:left;color:#f0ece4;font-family:DM Sans,sans-serif;"><span style="display:inline-block;width:7px;height:7px;border-radius:2px;background:rgba(240,236,228,0.7);margin-right:7px;vertical-align:middle;"></span>Quantum Computing</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+</div>
+</body>
+</html>
